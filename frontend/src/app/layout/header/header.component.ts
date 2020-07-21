@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  mailNotification = 40;
+  feedNotification = 8;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onClickLogout(): void {
+    alert("logout");
   }
 
 }
