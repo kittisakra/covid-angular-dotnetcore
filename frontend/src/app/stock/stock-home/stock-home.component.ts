@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 export interface PeriodicElement {
   name: string;
@@ -9,18 +10,24 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
+const DATA = [
+  { id: 1, productID: '', name: 'Modi dignissimos qui aut dolor quia et incidunt assumenda itaque.', price: 877.00, stock: 224, image: '' },
+  { id: 2, productID: '', name: 'At quaerat autem tempore totam tempora.', price: 639.00, stock: 115, image: '' },
+  { id: 3, productID: '', name: 'Sunt enim voluptate nisi. Dolorum porro eos quasi. Temporibus voluptas consequuntur vel recusandae eligendi id officiis.', price: 467.00, stock: 25, image: '' },
+  { id: 4, productID: '', name: 'Dolores doloribus labore sint ut. Eaque architecto omnis inventore accusamus tempore.', price: 474.00, stock: 25, image: '' },
+  { id: 5, productID: '', name: 'Practical Rubber Salad', price: 335.00, stock: 63, image: '' },
+  { id: 6, productID: '', name: 'Placeat omnis odio sed libero omnis repudiandae inventore.', price: 356.00, stock: 42, image: '' },
+  { id: 8, productID: '', name: 'Sit et deleniti repellendus aliquid eos cumque.', price: 273.00, stock: 53, image: '' },
+  { id: 9, productID: '', name: 'Refined Cotton Bike', price: 741.00, stock: 88, image: '' },
+  { id: 11, productID: '', name: 'molestias et molestiae', price: 1256.00, stock: 55, image: '' },
+  { id: 12, productID: '', name: 'Dolores doloribus labore sint ut. Eaque architecto omnis', price: 555.00, stock: 86, image: '' },
+  { id: 13, productID: '', name: 'Dolorum porro eos quasi.', price: 516.00, stock: 245, image: '' },
+  { id: 14, productID: '', name: 'Temporibus voluptas consequuntur vel recusandae eligendi id officiis.', price: 316.00, stock: 98, image: '' },
+  { id: 15, productID: '', name: 'Eaque architecto omnis', price: 1256.00, stock: 24, image: '' },
+  { id: 16, productID: '', name: 'molestias Sunt enim voluptate nisi.', price: 646.00, stock: 67, image: '' },
+  { id: 17, productID: '', name: 'Placeat omnis odio molestias et molestiae', price: 543.00, stock: 24, image: '' },
+  { id: 18, productID: '', name: 'dolor quia et incidunt assumenda', price: 335.00, stock: 12, image: '' },
+]
 
 @Component({
   selector: 'app-stock-home',
@@ -32,23 +39,25 @@ export class StockHomeComponent implements OnInit {
   //input for search
   textSearch: string = '';
 
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>();
+  displayedColumns = ['image', 'name', 'price', 'stock', 'action'];
+  dataSource = new MatTableDataSource<any>();
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor() { }
 
   ngOnInit(): void {
     this.feedData();
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   feedData() {
-    this.dataSource.data = ELEMENT_DATA;
+    this.dataSource.data = DATA;
   }
 
-  clearSearch(){
+  clearSearch() {
     this.textSearch = '';
     this.search(null);
   }
@@ -62,7 +71,4 @@ export class StockHomeComponent implements OnInit {
     this.textSearch = filterValue;
     this.dataSource.filter = filterValue.trim().toLowerCase()
   }
-
-
-
 }
