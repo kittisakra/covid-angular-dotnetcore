@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+
 import { StockHomeComponent } from './stock/stock-home/stock-home.component';
 import { StockCreateComponent } from './stock/stock-create/stock-create.component';
 import { StockEditComponent } from './stock/stock-edit/stock-edit.component';
@@ -39,6 +41,7 @@ import { MatSelectModule } from '@angular/material/select';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatToolbarModule,
     MatCardModule,
     MatButtonModule,

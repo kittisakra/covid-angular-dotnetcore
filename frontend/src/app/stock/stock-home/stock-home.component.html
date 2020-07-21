@@ -28,12 +28,25 @@
   </div>
 </div>
 
+<div class="search_form p-3 d-flex justify-content-between align-items-center">
+  <mat-form-field appearance="outline" class="w-50">
+    <mat-label>Search products</mat-label>
+    <input (keyup)="search($event)" [(ngModel)]="textSearch" matInput placeholder="name, product id, price, stock">
+    <mat-icon *ngIf="!textSearch" matSuffix>search</mat-icon>
+    <button (click)="clearSearch()" *ngIf="textSearch" mat-button matSuffix mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <button mat-flat-button color="primary">
+    <mat-icon>add</mat-icon>
+    New Product
+  </button>
+</div>
 
-
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100px">
+<mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100px">
   <!-- Position Column -->
   <ng-container matColumnDef="position">
-    <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
   </ng-container>
 
