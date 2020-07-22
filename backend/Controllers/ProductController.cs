@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using backend.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -7,72 +8,74 @@ namespace backend.Controllers
 {
 
     //localhost:.../api/product
-  [ApiController]
-  [Route("api/[controller]")]
-  public class ProductController : ControllerBase
-  {
-
-    ILogger<ProductController> _logger;
-
-    public ProductController(ILogger<ProductController> logger)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProductController : ControllerBase
     {
-      _logger = logger;
-    }
 
-    [HttpGet]
-    public IActionResult Get()
-    {
-      try
-      {
-        return Ok("kittisak");
-      }
-      catch (Exception)
-      {
-        _logger.LogError("Failed to execute GET");
-        return NotFound();
-      }
-    }
+        ILogger<ProductController> _logger;
+        public DataContext Data { get; set; }
 
-    [HttpPost]
-    public IActionResult Post()
-    {
-      try
-      {
-        return Created("", null);
-      }
-      catch (Exception)
-      {
-        _logger.LogError("Failed to execute POST");
-        return BadRequest();
-      }
-    }
+        public ProductController(ILogger<ProductController> logger, DataContext data)
+        {
+            this.Data = data;
+            _logger = logger;
+        }
 
-    [HttpPut]
-    public IActionResult Put()
-    {
-      try
-      {
-        return Ok();
-      }
-      catch (Exception)
-      {
-        _logger.LogError("Failed to execute PUT");
-        return BadRequest();
-      }
-    }
+        [HttpGet]
+        public IActionResult Get()
+        {
+            try
+            {
+                return Ok(Data.Products.ToList());
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Failed to execute GET");
+                return NotFound();
+            }
+        }
 
-    [HttpDelete]
-    public IActionResult Delete()
-    {
-      try
-      {
-        return Ok();
-      }
-      catch (Exception)
-      {
-        _logger.LogError("Failed to execute DELETE");
-        return BadRequest();
-      }
+        [HttpPost]
+        public IActionResult Post()
+        {
+            try
+            {
+                return Created("", null);
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Failed to execute POST");
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        public IActionResult Put()
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Failed to execute PUT");
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult Delete()
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Failed to execute DELETE");
+                return BadRequest();
+            }
+        }
     }
-  }
 }
