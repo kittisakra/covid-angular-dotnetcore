@@ -27,6 +27,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatSortModule } from '@angular/material/sort'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatSelectModule } from '@angular/material/select';
+import { MemberComponent } from './member/member.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MatSelectModule } from '@angular/material/select';
     StockCreateComponent,
     StockEditComponent,
     HeaderComponent,
-    SideNavComponent
+    SideNavComponent,
+    MemberComponent
   ],
   imports: [
     BrowserModule,

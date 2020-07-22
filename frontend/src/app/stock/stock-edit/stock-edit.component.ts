@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-stock-edit',
@@ -9,7 +10,11 @@ import { NgForm } from '@angular/forms';
 export class StockEditComponent implements OnInit {
   imageSrc: string | ArrayBuffer;
 
-  constructor() { }
+  constructor(activatedRoute: ActivatedRoute) {
+    activatedRoute.params.subscribe(params => {
+      alert(params.id);
+    });
+  }
 
   ngOnInit(): void {
   }
@@ -21,7 +26,7 @@ export class StockEditComponent implements OnInit {
     alert(form.value.name);
   }
 
-  onPreviewImageChange(event){
+  onPreviewImageChange(event) {
     const metaImage = event.target.files[0]
     if (metaImage) {
       //this.file = metaImage
