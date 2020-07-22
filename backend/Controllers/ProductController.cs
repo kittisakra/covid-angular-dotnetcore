@@ -1,6 +1,9 @@
 using System;
 using System.Linq;
 using backend.Data;
+using backend.Models;
+using backend.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,67 +17,107 @@ namespace backend.Controllers
     {
 
         ILogger<ProductController> _logger;
-        public DataContext Data { get; set; }
+        private readonly IProductRepository productRepository;
 
-        public ProductController(ILogger<ProductController> logger, DataContext data)
+        public ProductController(ILogger<ProductController> logger, IProductRepository productRepository)
         {
-            this.Data = data;
+            this.productRepository = productRepository;
             _logger = logger;
         }
 
+        //localhost:.../api/product
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetProducts()
         {
             try
             {
-                return Ok(Data.Products.ToList());
+                var result = productRepository.GetProducts();
+                return Ok(result);
             }
-            catch (Exception)
+            catch (Exception error)
             {
                 _logger.LogError("Failed to execute GET");
-                return NotFound();
+                return StatusCode(500, new { message = error });
+            }
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetProductById(int id)
+        {
+            try
+            {
+                var result = productRepository.GetProduct(id);
+                if (result == null)
+                {
+                    return NotFound(new { message = "Product not found" });
+                }
+                return Ok(result);
+            }
+            catch (Exception error)
+            {
+                _logger.LogError("Failed to execute GET");
+                return StatusCode(500, new { message = error });
             }
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public IActionResult Post([FromForm] Products product, IFormFile file)
         {
             try
             {
+                productRepository.AddProduct(product, file);
                 return Created("", null);
             }
-            catch (Exception)
+            catch (Exception error)
             {
                 _logger.LogError("Failed to execute POST");
-                return BadRequest();
+                return StatusCode(500, new { message = error });
             }
         }
 
-        [HttpPut]
-        public IActionResult Put()
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromForm] Products product, IFormFile file)
         {
             try
             {
-                return Ok();
+                var result = productRepository.GetProduct(id);
+                if (result == null)
+                {
+                    return NotFound(new { message = "Product not found" });
+                }
+
+                result.Name = product.Name;
+                result.Price = product.Price;
+                result.Stock = product.Stock;
+
+                productRepository.EditProduct(result, file);
+                return Ok(result);
             }
-            catch (Exception)
+            catch (Exception error)
             {
                 _logger.LogError("Failed to execute PUT");
-                return BadRequest();
+                return StatusCode(500, new { message = error });
             }
         }
 
-        [HttpDelete]
-        public IActionResult Delete()
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
             try
             {
-                return Ok();
+                var result = productRepository.GetProduct(id);
+                if (result == null)
+                {
+                    return NotFound(new { message = "Product not found" });
+                }
+
+                productRepository.DeleteProduct(result);
+                return Ok(result);
             }
             catch (Exception)
             {
                 _logger.LogError("Failed to execute DELETE");
-                return BadRequest();
+                return NoContent();
             }
         }
     }

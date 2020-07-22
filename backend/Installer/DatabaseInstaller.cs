@@ -1,4 +1,5 @@
 using backend.Data;
+using backend.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,8 @@ namespace backend.Installer
         {
             services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("ConnectionSQLServer")));
+
+            services.AddTransient<IProductRepository, ProductRepository>();
         }
     }
 }
