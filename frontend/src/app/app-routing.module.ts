@@ -13,7 +13,7 @@ const routes: Routes = [
       { path: 'edit/:id', component: StockEditComponent },
     ]
   },
-  { path: '', component: MemberComponent }
+  { path: '**', component: MemberComponent }
 ];
 
 @NgModule({

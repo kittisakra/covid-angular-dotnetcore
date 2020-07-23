@@ -3,3 +3,12 @@ export class Member {
     password: string;
     position: string;
 }
+
+export class RegisterResponse {
+    message: string;
+}
+
+export class LoginResponse {
+    message: string;
+    token: string;
+}

@@ -10,4 +10,10 @@ export class AuthService {
   getToken(): string {
     return localStorage.getItem("Test007");
   }
+
+  setToken(token: string) {
+    localStorage.setItem("Test007", token);
+  }
 }
+
+
