@@ -3,6 +3,7 @@ using System.Linq;
 using backend.Data;
 using backend.Models;
 using backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,7 @@ namespace backend.Controllers
     //localhost:.../api/product
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ProductController : ControllerBase
     {
 
@@ -119,6 +121,13 @@ namespace backend.Controllers
                 _logger.LogError("Failed to execute DELETE");
                 return NoContent();
             }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("images/{name}")]
+        public IActionResult ProductImage(string name)
+        {
+            return File($"~/images/{name}", "image/jpg");
         }
     }
 }
