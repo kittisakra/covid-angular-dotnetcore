@@ -9,7 +9,7 @@ namespace backend.Controllers
 {
 
     [Route("api")]
-    [Route("api/authController")]
+    [Route("api/[controller]")]
     public class authController : Controller
     {
 
@@ -28,7 +28,16 @@ namespace backend.Controllers
         {
             try
             {
-                return Created("", null);
+                (Users users, String token) = authRepository.Login(user);
+                if(user == null){
+                    return Unauthorized(new { message = "username invalid" });
+                }
+
+                if(String.IsNullOrEmpty(token)){
+                    return Unauthorized(new { message = "password invalid" });
+                }
+
+                return Ok(new { token = token, message = "Login Successfully"});
             }
             catch (Exception error)
             {
@@ -42,7 +51,8 @@ namespace backend.Controllers
         {
             try
             {
-                return Created("", null);
+                authRepository.Register(user);
+                return Ok(new {message = "Successfully registered"});
             }
             catch (Exception error)
             {
