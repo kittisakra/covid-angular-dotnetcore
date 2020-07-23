@@ -39,6 +39,8 @@ namespace backend
 
             app.UseHttpsRedirection();
 
+            app.UseCors("AllowAll");
+
             app.UseRouting();
 
             app.UseAuthentication();
