@@ -14,6 +14,7 @@ namespace backend.Installer
             options.UseSqlServer(configuration.GetConnectionString("ConnectionSQLServer")));
 
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IAuthRepository, AuthRepository>();
         }
     }
 }
