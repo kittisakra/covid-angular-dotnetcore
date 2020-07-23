@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { NetworkService } from 'src/app/services/network.service';
 
 export interface PeriodicElement {
   name: string;
@@ -45,7 +46,9 @@ export class StockHomeComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor() { }
+  constructor(networkService: NetworkService) {
+    networkService.getProducts();
+  }
 
   ngOnInit(): void {
     this.feedData();
