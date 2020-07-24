@@ -4,11 +4,11 @@ export class Member {
     position: string;
 }
 
-export class RegisterResponse {
+export interface RegisterResponse {
     message: string;
 }
 
-export class LoginResponse {
+export interface LoginResponse {
     message: string;
     token: string;
 }

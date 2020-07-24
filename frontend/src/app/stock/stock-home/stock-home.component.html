@@ -53,7 +53,7 @@
         <td mat-cell *matCellDef="let element">
           <div class="over-lay mx-auto d-block border-top border-left border-right rounded-top">
             <img
-              [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/1200px-Angular_full_color_logo.svg.png'"
+              [src]="element.image"
               class="img-fluid bg-light rounded-top">
             <div class="over-lay-text text-center mat-small">{{ element.id }}</div>
           </div>
@@ -69,22 +69,22 @@
       <!-- Weight Column -->
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-right"> PRICE </th>
-        <td mat-cell *matCellDef="let element" class="text-right"> {{element.price}} </td>
+        <td mat-cell *matCellDef="let element" class="text-right"> {{element.price | number: '1.2-2'}} </td>
       </ng-container>
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="stock">
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> STOCK </th>
-        <td mat-cell *matCellDef="let element" class="text-center"> {{element.stock}} </td>
+        <td mat-cell *matCellDef="let element" class="text-center"> {{element.stock | number}} </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef class="text-center"> ACTION </th>
         <td mat-cell *matCellDef="let element" class="text-center">
-          <button mat-icon-button>
+          <button (click)="editProduct(element.productId)" mat-icon-button>
             <mat-icon class="material-icons-outlined">edit</mat-icon>
           </button>
-          <button mat-icon-button>
+          <button (click)="deleteProduct(element.productId)" mat-icon-button>
             <mat-icon>delete_outline</mat-icon>
           </button>
         </td>
