@@ -1,4 +1,5 @@
 <form #productForm="ngForm" (submit)="onSubmitForm(productForm)">
+    <input ngModel name="productId" hidden>
     <mat-card>
         <mat-card-header>
             <mat-card-title class="d-flex justify-content-between align-items-center">

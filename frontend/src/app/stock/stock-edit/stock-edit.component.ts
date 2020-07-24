@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NetworkService } from 'src/app/services/network.service';
+import { Product } from 'src/app/models/product.model';
 
 @Component({
   selector: 'app-stock-edit',
@@ -10,26 +12,64 @@ import { ActivatedRoute } from '@angular/router';
 export class StockEditComponent implements OnInit {
   imageSrc: string | ArrayBuffer;
 
-  constructor(activatedRoute: ActivatedRoute) {
-    activatedRoute.params.subscribe(params => {
-      alert(params.id);
+  //productForm refer from html
+  @ViewChild('productForm', { static: true }) productForm: NgForm
+  file: File;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private networkService: NetworkService,
+    private router: Router,
+  ) { }
+
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
+      //alert(params.id);
+      this.feedData(params.id);
     });
   }
 
-  ngOnInit(): void {
+  feedData(id: number) {
+    this.networkService.getProduct(id).subscribe(
+      res => {
+        setTimeout(() => {
+          var { productId, name, stock, price, image } = { ...res }
+          this.imageSrc = this.networkService.getProductImageURL(image);
+          this.productForm.setValue({ productId, name, stock, price });//
+        });
+      },
+      error => {
+        this.router.navigate(["/stock"])
+      }
+    );
   }
 
   onSubmitForm(form: NgForm) {
     if (form.invalid) {
       return;
     }
-    alert(form.value.name);
+    const value = form.value;
+    let product = new Product();
+
+    product.name = value.name;
+    product.image = this.file;
+    product.price = value.price;
+    product.stock = value.stock;
+
+    this.networkService.editProduct(product, value.productId).subscribe(
+      res => {
+        this.router.navigate(["/stock"]);
+      },
+      error => {
+        alert(error);
+      }
+    );
   }
 
   onPreviewImageChange(event) {
     const metaImage = event.target.files[0]
     if (metaImage) {
-      //this.file = metaImage
+      this.file = metaImage
 
       const reader = new FileReader()
       reader.readAsDataURL(metaImage)
