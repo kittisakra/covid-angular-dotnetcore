@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { NetworkService } from 'src/app/services/network.service';
 import { Product } from 'src/app/models/product.model';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-stock-create',
@@ -35,6 +36,10 @@ export class StockCreateComponent implements OnInit {
 
     this.networkService.addProduct(product).subscribe(
       res => {
+        Swal.fire(
+          'Add Product!',
+          'success'
+        )
         this.router.navigate(["/stock"]);
       },
       error => {

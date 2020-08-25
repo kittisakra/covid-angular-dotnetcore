@@ -4,6 +4,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { NetworkService } from 'src/app/services/network.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-stock-home',
@@ -48,15 +50,31 @@ export class StockHomeComponent implements OnInit {
   }
 
   deleteProduct(id: number) {
-    this.networkService.deleteProduct(id).subscribe(
-      res => {
-        alert("Delete successful");
-        this.feedData();
-      },
-      error => {
-        alert("Delete failed");
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.networkService.deleteProduct(id).subscribe(
+          res => {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+            this.feedData();
+          },
+          error => {
+            alert("Delete failed");
+          }
+        );
       }
-    );
+    })
   }
 
   editProduct(id: number) {
@@ -76,5 +94,9 @@ export class StockHomeComponent implements OnInit {
 
     this.textSearch = filterValue;
     this.dataSource.filter = filterValue.trim().toLowerCase()
+  }
+
+  toggleImage() {
+
   }
 }

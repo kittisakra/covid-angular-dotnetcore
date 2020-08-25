@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NetworkService } from 'src/app/services/network.service';
 import { Product } from 'src/app/models/product.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-stock-edit',
@@ -58,6 +59,10 @@ export class StockEditComponent implements OnInit {
 
     this.networkService.editProduct(product, value.productId).subscribe(
       res => {
+        Swal.fire(
+          'Edit Product!',
+          'success'
+        )
         this.router.navigate(["/stock"]);
       },
       error => {

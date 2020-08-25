@@ -31,6 +31,7 @@ import { MatSortModule } from '@angular/material/sort'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatSelectModule } from '@angular/material/select';
 import { MemberComponent } from './member/member.component';
+import { ShopComponent } from './shop/shop.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MemberComponent } from './member/member.component';
     StockEditComponent,
     HeaderComponent,
     SideNavComponent,
-    MemberComponent
+    MemberComponent,
+    ShopComponent
   ],
   imports: [
     BrowserModule,

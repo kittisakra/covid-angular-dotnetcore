@@ -24,7 +24,7 @@ export class MainInterceptor implements HttpInterceptor {
                 err => {
                     if (err instanceof HttpErrorResponse) {
                         if (err.status === 401 || err.status === 403) {
-                            this.authService.logout();
+                           this.authService.logout();
                         }
                     }
                 }

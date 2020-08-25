@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core'; 
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-header',
@@ -10,13 +12,19 @@ export class HeaderComponent implements OnInit {
   mailNotification = 40;
   feedNotification = 8;
 
-  constructor() { }
+  @Output('sidenavtoggle') navToggle = new EventEmitter();
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
   onClickLogout(): void {
-    alert("logout");
+    this.authService.logout();
+  }
+
+  OnClickNavToggle(){
+    this.navToggle.emit();
   }
 
 }

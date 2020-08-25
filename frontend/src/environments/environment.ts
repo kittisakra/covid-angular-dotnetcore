@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  baseAPIURL: 'http://192.168.0.171:5000/',
+  baseAPIURL: 'http://localhost:5000/',
   keyLocalAuthenInfo: 'dev_token'
 };
